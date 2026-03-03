@@ -1,4 +1,32 @@
 import { useMemo } from 'react';
+import { motion } from 'framer-motion';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+};
+
+const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+};
+
+const scaleIn = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
+};
+
+const slideRight = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0 },
+};
+
+const slideLeft = {
+    hidden: { opacity: 0, x: 30 },
+    visible: { opacity: 1, x: 0 },
+};
+
+const viewportConfig = { once: false, amount: 0.2 };
 
 // Generate a deterministic contribution grid (GitHub-style heatmap)
 function ContributionGraph() {
@@ -7,7 +35,6 @@ function ContributionGraph() {
 
     const grid = useMemo(() => {
         const data = [];
-        // Use a seeded-like pattern for consistency
         const pattern = [0, 1, 0, 2, 3, 1, 0, 2, 1, 3, 4, 2, 1, 0, 3, 2, 4, 1, 0, 2,
             1, 3, 0, 2, 4, 1, 3, 2, 0, 1, 4, 2, 3, 1, 0, 2, 1, 0, 3, 4,
             2, 1, 3, 0, 2, 4, 1, 0, 3, 2, 1, 4, 0, 2, 3, 1, 2, 0, 4, 3,
@@ -24,11 +51,11 @@ function ContributionGraph() {
     }, []);
 
     const levelColors = [
-        'bg-dark-border/30',       // 0 - empty
-        'bg-neon/15',              // 1 - low
-        'bg-neon/30',              // 2 - medium
-        'bg-neon/55',              // 3 - high
-        'bg-neon/80',              // 4 - max
+        'bg-dark-border/30',
+        'bg-neon/15',
+        'bg-neon/30',
+        'bg-neon/55',
+        'bg-neon/80',
     ];
 
     return (
@@ -59,12 +86,20 @@ export default function About() {
     return (
         <section id="about" className="relative min-h-screen py-16 bg-dark overflow-hidden flex flex-col justify-center">
             {/* Background effects */}
+            <div className="absolute inset-0 bg-checkerboard opacity-[0.07] pointer-events-none" />
             <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-dark-border to-transparent" />
             <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-neon/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="w-full px-6 md:px-10 lg:px-16 relative z-10">
                 {/* Header — GitHub-style breadcrumb */}
-                <div className="mb-12">
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={viewportConfig}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="mb-12"
+                >
                     <div className="flex items-center gap-2 text-dark-text text-sm mb-4 font-mono flex-wrap">
                         <a href="https://github.com/madhumithadasarathy" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-neon transition-colors">
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -89,16 +124,23 @@ export default function About() {
                     <p className="text-dark-text max-w-2xl text-sm md:text-base">
                         A closer look at the algorithms and architecture behind my work. I blend logic with creativity to build robust, scalable systems.
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
                     {/* ── LEFT COLUMN: Image + Stats ── */}
                     <div className="lg:col-span-3 flex flex-col gap-5">
                         {/* Profile Image Card */}
-                        <div className="group relative bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden aspect-square">
+                        <motion.div
+                            variants={slideRight}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={viewportConfig}
+                            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                            className="group relative bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden aspect-square"
+                        >
                             <img
-                                src="/madhu.jpg"
+                                src="/about.jpg"
                                 alt="Madhumitha"
                                 className="w-full h-full object-cover object-top"
                                 onError={(e) => { e.target.style.display = 'none'; }}
@@ -113,7 +155,7 @@ export default function About() {
                                 <div className="w-2 h-2 rounded-full bg-neon animate-pulse" />
                                 <span className="text-[10px] text-neon font-medium">Active</span>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Quick Stats — GitHub style */}
                         <div className="grid grid-cols-2 gap-3">
@@ -122,11 +164,19 @@ export default function About() {
                                 { value: '5+', label: 'Yrs' },
                                 { value: '20+', label: 'Projects' },
                                 { value: '10+', label: 'Stars' },
-                            ].map((stat) => (
-                                <div key={stat.label} className="bg-dark-card/10 backdrop-blur-sm rounded-xl p-3 border border-dark-border/30 hover:border-neon/30 transition-all duration-300 text-center group">
+                            ].map((stat, i) => (
+                                <motion.div
+                                    key={stat.label}
+                                    variants={scaleIn}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={viewportConfig}
+                                    transition={{ duration: 0.4, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
+                                    className="bg-dark-card/10 backdrop-blur-sm rounded-xl p-3 border border-dark-border/30 hover:border-neon/30 transition-all duration-300 text-center group"
+                                >
                                     <span className="text-xl font-black text-white font-compagnon block group-hover:text-neon transition-colors">{stat.value}</span>
                                     <span className="text-[10px] text-dark-text uppercase tracking-wider font-medium">{stat.label}</span>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </div>
@@ -137,8 +187,14 @@ export default function About() {
                         {/* Row 1: Bio + Contribution Graph */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             {/* README.md Card */}
-                            <div className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden">
-                                {/* Card header — file tab style */}
+                            <motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={viewportConfig}
+                                transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+                                className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden"
+                            >
                                 <div className="flex items-center gap-2 px-5 py-3 border-b border-dark-border/20 bg-dark-card/20">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-dark-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -156,10 +212,17 @@ export default function About() {
                                         Also exploring embedded systems and IoT, bridging software and hardware.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
 
                             {/* Contribution Graph Card */}
-                            <div className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden">
+                            <motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={viewportConfig}
+                                transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
+                                className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden"
+                            >
                                 <div className="flex items-center justify-between px-5 py-3 border-b border-dark-border/20 bg-dark-card/20">
                                     <div className="flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-dark-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -173,7 +236,6 @@ export default function About() {
                                     <div className="overflow-x-auto">
                                         <ContributionGraph />
                                     </div>
-                                    {/* Legend */}
                                     <div className="flex items-center justify-end gap-1.5 text-[10px] text-dark-text">
                                         <span>Less</span>
                                         <div className="w-[10px] h-[10px] rounded-[2px] bg-dark-border/30" />
@@ -184,11 +246,18 @@ export default function About() {
                                         <span>More</span>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
 
                         {/* Row 2: Recent Commits */}
-                        <div className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden">
+                        <motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={viewportConfig}
+                            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+                            className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden"
+                        >
                             <div className="flex items-center justify-between px-5 py-3 border-b border-dark-border/20 bg-dark-card/20">
                                 <div className="flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -199,9 +268,16 @@ export default function About() {
                                 <span className="text-[10px] text-dark-text font-mono">{commitLog.length} commits</span>
                             </div>
                             <div className="divide-y divide-dark-border/15">
-                                {commitLog.map((commit) => (
-                                    <div key={commit.hash} className="px-5 py-3 flex items-start gap-3 hover:bg-neon/[0.03] transition-colors group">
-                                        {/* Commit dot */}
+                                {commitLog.map((commit, i) => (
+                                    <motion.div
+                                        key={commit.hash}
+                                        variants={slideLeft}
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={viewportConfig}
+                                        transition={{ duration: 0.4, delay: 0.35 + i * 0.08, ease: 'easeOut' }}
+                                        className="px-5 py-3 flex items-start gap-3 hover:bg-neon/[0.03] transition-colors group"
+                                    >
                                         <div className="mt-1.5 w-2 h-2 rounded-full bg-neon/40 group-hover:bg-neon/80 transition-colors shrink-0" />
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm text-white truncate group-hover:text-neon transition-colors">{commit.msg}</p>
@@ -211,13 +287,20 @@ export default function About() {
                                                 <span className="text-[10px] text-dark-text">{commit.time}</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Row 3: Tech Stack Tags — pinned repos style */}
-                        <div className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden">
+                        <motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={viewportConfig}
+                            transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
+                            className="bg-dark-card/10 backdrop-blur-sm rounded-2xl border border-dark-border/30 hover:border-neon/30 transition-all duration-500 overflow-hidden"
+                        >
                             <div className="flex items-center gap-2 px-5 py-3 border-b border-dark-border/20 bg-dark-card/20">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-dark-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
@@ -234,14 +317,22 @@ export default function About() {
                                     { name: 'Python', color: 'bg-yellow-400' },
                                     { name: 'React', color: 'bg-cyan-400' },
                                     { name: 'TensorFlow', color: 'bg-orange-500' },
-                                ].map((tag) => (
-                                    <span key={tag.name} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-dark-border/20 bg-dark/10 text-xs text-white font-medium hover:border-neon/40 hover:bg-neon/[0.05] transition-all cursor-default group">
+                                ].map((tag, i) => (
+                                    <motion.span
+                                        key={tag.name}
+                                        variants={scaleIn}
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={viewportConfig}
+                                        transition={{ duration: 0.3, delay: 0.45 + i * 0.05, ease: 'easeOut' }}
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-dark-border/20 bg-dark/10 text-xs text-white font-medium hover:border-neon/40 hover:bg-neon/[0.05] transition-all cursor-default group"
+                                    >
                                         <span className={`w-2 h-2 rounded-full ${tag.color}`} />
                                         {tag.name}
-                                    </span>
+                                    </motion.span>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

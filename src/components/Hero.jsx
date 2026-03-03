@@ -1,3 +1,32 @@
+import { motion } from 'framer-motion';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+};
+
+const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+};
+
+const scaleIn = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 },
+};
+
+const slideRight = {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
+};
+
+const slideLeft = {
+    hidden: { opacity: 0, x: 40 },
+    visible: { opacity: 1, x: 0 },
+};
+
+const viewportConfig = { once: false, amount: 0.3 };
+
 export default function Hero() {
     return (
         <section
@@ -12,29 +41,57 @@ export default function Hero() {
                 {/* Left Content */}
                 <div className="flex-1 space-y-6 text-center lg:text-left z-10">
                     {/* Greeting badge */}
-                    <div className="inline-flex items-center gap-2 bg-dark-card border border-dark-border rounded-full px-4 py-1.5">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                        className="inline-flex items-center gap-2 bg-dark-card border border-dark-border rounded-full px-4 py-1.5"
+                    >
                         <span className="text-sm">👋</span>
                         <span className="text-sm text-dark-text">Hello There!</span>
-                    </div>
+                    </motion.div>
 
                     {/* Main headline */}
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
+                    <motion.h1
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
+                        className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
+                    >
                         I'm <span className="text-neon">Madhumitha</span>,{' '}
                         <br className="hidden sm:block" />
                         AI Engineer{' '}
                         <br className="hidden sm:block" />
-                   
-                    </h1>
+
+                    </motion.h1>
 
                     {/* Description */}
-                    <p className="text-dark-text text-sm sm:text-base max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    <motion.p
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+                        className="text-dark-text text-sm sm:text-base max-w-lg mx-auto lg:mx-0 leading-relaxed"
+                    >
                         Final-year CS (AI & ML) student building engineering solutions across
                         web development, artificial intelligence, and embedded systems — with
                         measurable social impact.
-                    </p>
+                    </motion.p>
 
                     {/* CTA Buttons */}
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.6, delay: 0.45, ease: 'easeOut' }}
+                        className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2"
+                    >
                         <a
                             href="#projects"
                             className="group inline-flex items-center gap-2 bg-neon text-dark font-semibold px-7 py-3 rounded-full
@@ -69,11 +126,18 @@ export default function Hero() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
                         </a>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Right Content — Image & Decorations */}
-                <div className="flex-1 relative flex items-center justify-center z-10">
+                <motion.div
+                    variants={scaleIn}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={viewportConfig}
+                    transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+                    className="flex-1 relative flex items-center justify-center z-10"
+                >
                     {/* Outer decorative ring */}
                     <div className="absolute w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px]
                           rounded-full border-2 border-dashed border-dark-border animate-spin-slow opacity-40" />
@@ -81,7 +145,6 @@ export default function Hero() {
                     {/* Main image container */}
                     <div className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[420px] lg:h-[420px]
                           rounded-full overflow-hidden border-4 border-neon/30 bg-dark-card">
-                        {/* Placeholder for profile image — replace src with your image */}
                         <img
                             src="/madhu.jpg"
                             alt="Madhumitha Dasarathy"
@@ -90,11 +153,17 @@ export default function Hero() {
                                 e.target.style.display = 'none';
                             }}
                         />
-                        {/* Fallback gradient if no image */}
                     </div>
 
                     {/* Floating badge — AI/ML Engineer (top-right) */}
-                    <div className="absolute top-4 right-0 sm:top-8 sm:-right-2 lg:top-12 lg:-right-4 animate-float">
+                    <motion.div
+                        variants={slideLeft}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
+                        className="absolute top-4 right-0 sm:top-8 sm:-right-2 lg:top-12 lg:-right-4 animate-float"
+                    >
                         <div className="bg-dark-card border border-dark-border rounded-2xl px-4 py-2.5 flex items-center gap-2
                             shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
                             <div className="w-8 h-8 rounded-full bg-neon/20 flex items-center justify-center">
@@ -104,11 +173,18 @@ export default function Hero() {
                             </div>
                             <span className="text-white text-xs font-medium">AI/ML Engineer</span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Floating badge — App Developer (top-left) */}
-                    <div className="absolute -top-2 left-0 sm:-top-4 sm:-left-2 lg:-top-4 lg:-left-6 animate-float"
-                        style={{ animationDelay: '0.8s' }}>
+                    <motion.div
+                        variants={slideRight}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
+                        className="absolute -top-2 left-0 sm:-top-4 sm:-left-2 lg:-top-4 lg:-left-6 animate-float"
+                        style={{ animationDelay: '0.8s' }}
+                    >
                         <div className="bg-dark-card border border-dark-border rounded-2xl px-4 py-2.5 flex items-center gap-2
                             shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
                             <div className="w-8 h-8 rounded-full bg-neon/20 flex items-center justify-center">
@@ -118,11 +194,18 @@ export default function Hero() {
                             </div>
                             <span className="text-white text-xs font-medium">App Developer</span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Floating badge — Web Developer (bottom-left) */}
-                    <div className="absolute bottom-8 left-0 sm:bottom-12 sm:-left-4 lg:bottom-16 lg:-left-8 animate-float"
-                        style={{ animationDelay: '1.5s' }}>
+                    <motion.div
+                        variants={slideRight}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.7, ease: 'easeOut' }}
+                        className="absolute bottom-8 left-0 sm:bottom-12 sm:-left-4 lg:bottom-16 lg:-left-8 animate-float"
+                        style={{ animationDelay: '1.5s' }}
+                    >
                         <div className="bg-neon text-dark rounded-full px-4 py-2 flex items-center gap-2 shadow-[0_8px_32px_rgba(163,230,53,0.25)]">
                             <div className="w-6 h-6 rounded-full bg-dark/20 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -131,11 +214,18 @@ export default function Hero() {
                             </div>
                             <span className="text-xs font-semibold">Web Developer</span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Floating badge — Full Stack Dev (bottom-right) */}
-                    <div className="absolute -bottom-4 right-4 sm:-bottom-6 sm:right-0 lg:-bottom-6 lg:-right-2 animate-float"
-                        style={{ animationDelay: '2.2s' }}>
+                    <motion.div
+                        variants={slideLeft}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+                        className="absolute -bottom-4 right-4 sm:-bottom-6 sm:right-0 lg:-bottom-6 lg:-right-2 animate-float"
+                        style={{ animationDelay: '2.2s' }}
+                    >
                         <div className="bg-neon text-dark rounded-full px-4 py-2 flex items-center gap-2 shadow-[0_8px_32px_rgba(163,230,53,0.25)]">
                             <div className="w-6 h-6 rounded-full bg-dark/20 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -144,11 +234,18 @@ export default function Hero() {
                             </div>
                             <span className="text-[10px] sm:text-xs tracking-wider uppercase drop-shadow">Full Stack Dev</span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Floating badge — SAP (new placement right) */}
-                    <div className="absolute top-1/2 right-0 sm:right-6 lg:-right-4 animate-float -translate-y-[60%]"
-                        style={{ animationDelay: '1.2s' }}>
+                    {/* Floating badge — SAP (right) */}
+                    <motion.div
+                        variants={slideLeft}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
+                        className="absolute top-1/2 right-0 sm:right-6 lg:-right-4 animate-float -translate-y-[60%]"
+                        style={{ animationDelay: '1.2s' }}
+                    >
                         <div className="bg-gradient-to-br from-[#1A1A24] to-dark-card border border-dark-border/80 rounded-2xl px-4 py-2.5 flex items-center gap-2
                             shadow-[-10px_-10px_30px_rgb(255,255,255,0.02),10px_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-md">
                             <div className="w-8 h-8 rounded-full bg-neon/10 flex items-center justify-center">
@@ -158,11 +255,18 @@ export default function Hero() {
                             </div>
                             <span className="text-white text-xs font-semibold tracking-wide">SAP</span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Floating badge — Artist (new placement left) */}
-                    <div className="absolute top-1/2 -left-2 sm:-left-4 lg:-left-6 animate-float -translate-y-[40%]"
-                        style={{ animationDelay: '2.5s' }}>
+                    {/* Floating badge — Artist (left) */}
+                    <motion.div
+                        variants={slideRight}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewportConfig}
+                        transition={{ duration: 0.5, delay: 0.75, ease: 'easeOut' }}
+                        className="absolute top-1/2 -left-2 sm:-left-4 lg:-left-6 animate-float -translate-y-[40%]"
+                        style={{ animationDelay: '2.5s' }}
+                    >
                         <div className="bg-neon text-dark rounded-full px-4 py-2 flex items-center gap-2
                              shadow-[0_8px_32px_rgba(163,230,53,0.3)] transition-all duration-300">
                             <div className="w-6 h-6 rounded-full bg-dark/20 flex items-center justify-center backdrop-blur-sm">
@@ -172,7 +276,7 @@ export default function Hero() {
                             </div>
                             <span className="text-xs font-bold tracking-wider uppercase text-dark">Artist</span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Decorative green dot */}
                     <div className="absolute top-12 left-20 lg:left-16">
@@ -184,7 +288,7 @@ export default function Hero() {
 
                     {/* Decorative circle outline bottom-right */}
                     <div className="absolute -bottom-2 right-8 lg:right-4 w-12 h-12 rounded-full border-2 border-neon/30" />
-                </div>
+                </motion.div>
             </div>
         </section>
     );
