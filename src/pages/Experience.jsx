@@ -1,0 +1,8 @@
+export default function Experience() {
+    return (
+        <div className="pt-24 px-6 max-w-7xl mx-auto h-screen flex flex-col items-center justify-center text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Experience</h1>
+            <p className="text-dark-text text-lg">My past experiences will be outlined here.</p>
+        </div>
+    );
+}

@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Compagnon';
+  src: url('/Compagnon-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-neon: #a3e635;
+  --color-neon-dark: #84cc16;
+  --color-dark: #0a0a0a;
+  --color-dark-card: #141414;
+  --color-dark-border: #1f1f1f;
+  --color-dark-text: #a1a1a1;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-compagnon: 'Compagnon', 'Poppins', sans-serif;
+}
+
+body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='%23a3e635' transform='rotate(-120 12 12)' d='M2.01 21L23 12 2.01 3v7.5l15 1.5-15 1.5z'/%3E%3C/svg%3E") 13 2, auto;
+}
+
+a,
+button,
+[role="button"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='%2384cc16' transform='rotate(-120 12 12)' d='M2.01 21L23 12 2.01 3v7.5l15 1.5-15 1.5z'/%3E%3C/svg%3E") 13 2, pointer;
+}
+
+.bg-checkerboard {
+  background-color: #000000;
+  background-image:
+    linear-gradient(45deg, #171717 25%, transparent 25%, transparent 75%, #171717 75%, #171717),
+    linear-gradient(45deg, #171717 25%, transparent 25%, transparent 75%, #171717 75%, #171717);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
