@@ -84,7 +84,7 @@ const commitLog = [
 
 export default function About() {
     return (
-        <section id="about" className="relative min-h-screen pt-24 sm:pt-16 pb-16 bg-dark overflow-hidden flex flex-col justify-center">
+        <section id="about" className="relative sm:min-h-screen pt-24 sm:pt-16 pb-16 bg-dark overflow-hidden flex flex-col sm:justify-center">
             {/* Background effects */}
             <div className="absolute inset-0 bg-checkerboard opacity-[0.07] pointer-events-none" />
             <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-dark-border to-transparent" />
