@@ -118,7 +118,7 @@ export default function Timeline() {
 
     return (
         <section id="timeline" ref={containerRef} className="relative bg-dark" style={{ height: isMobile ? `${milestones.length * 70}vh` : `${milestones.length * 100}vh` }}>
-            <div className="sticky top-0 h-screen overflow-hidden flex items-center" style={{ willChange: 'transform' }}>
+            <div className="sticky top-0 h-screen overflow-hidden flex items-start pt-20 lg:items-center lg:pt-0" style={{ willChange: 'transform' }}>
 
                 {/* ═══ BACKGROUND LAYERS ═══ */}
 
@@ -187,7 +187,7 @@ export default function Timeline() {
                         {/* ── LEFT COLUMN: Nav + Controls ── */}
                         <div className="lg:col-span-4 xl:col-span-3">
                             {/* Section tag */}
-                            <div className="hidden lg:block mb-8">
+                            <div className="mb-8">
                                 <span className="text-[10px] uppercase tracking-[0.25em] font-mono block mb-2" style={{ color: active.color }}>
                                     Academic Journey
                                 </span>
