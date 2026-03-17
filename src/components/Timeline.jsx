@@ -1,5 +1,16 @@
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
+
+function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < breakpoint);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, [breakpoint]);
+    return isMobile;
+}
 
 const milestones = [
     {
@@ -91,6 +102,7 @@ function Particles({ color, count = 20 }) {
 export default function Timeline() {
     const containerRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const isMobile = useIsMobile();
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -105,14 +117,14 @@ export default function Timeline() {
     const active = milestones[activeIndex];
 
     return (
-        <section id="timeline" ref={containerRef} className="relative bg-dark" style={{ height: `${milestones.length * 100}vh` }}>
-            <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+        <section id="timeline" ref={containerRef} className="relative bg-dark" style={{ height: isMobile ? `${milestones.length * 70}vh` : `${milestones.length * 100}vh` }}>
+            <div className="sticky top-0 h-screen overflow-hidden flex items-center" style={{ willChange: 'transform' }}>
 
                 {/* ═══ BACKGROUND LAYERS ═══ */}
 
                 {/* Large color blob */}
                 <motion.div
-                    className="absolute w-[700px] h-[700px] rounded-full blur-[200px] pointer-events-none"
+                    className="absolute w-[350px] h-[350px] sm:w-[700px] sm:h-[700px] rounded-full blur-[80px] sm:blur-[200px] pointer-events-none"
                     animate={{
                         background: active.colorDim,
                         x: activeIndex === 0 ? '50%' : activeIndex === 1 ? '-30%' : '20%',
@@ -122,7 +134,7 @@ export default function Timeline() {
                     style={{ right: 0, top: 0 }}
                 />
                 <motion.div
-                    className="absolute w-[400px] h-[400px] rounded-full blur-[150px] pointer-events-none"
+                    className="absolute w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] rounded-full blur-[60px] sm:blur-[150px] pointer-events-none"
                     animate={{ background: active.colorDim }}
                     transition={{ duration: 1.5 }}
                     style={{ left: '-5%', bottom: '10%' }}
@@ -138,22 +150,24 @@ export default function Timeline() {
                         transition={{ duration: 0.8 }}
                         className="absolute inset-0"
                     >
-                        <Particles color={active.color} count={25} />
+                        <Particles color={active.color} count={isMobile ? 8 : 25} />
                     </motion.div>
                 </AnimatePresence>
 
                 {/* Decorative rings */}
-                <motion.div
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-                >
-                    <svg width="800" height="800" viewBox="0 0 800 800" className="opacity-[0.03]">
-                        <circle cx="400" cy="400" r="350" fill="none" stroke={active.color} strokeWidth="0.5" strokeDasharray="4 8" />
-                        <circle cx="400" cy="400" r="300" fill="none" stroke={active.color} strokeWidth="0.5" strokeDasharray="2 12" />
-                        <circle cx="400" cy="400" r="390" fill="none" stroke={active.color} strokeWidth="0.3" strokeDasharray="1 16" />
-                    </svg>
-                </motion.div>
+                {!isMobile && (
+                    <motion.div
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+                    >
+                        <svg width="800" height="800" viewBox="0 0 800 800" className="opacity-[0.03]">
+                            <circle cx="400" cy="400" r="350" fill="none" stroke={active.color} strokeWidth="0.5" strokeDasharray="4 8" />
+                            <circle cx="400" cy="400" r="300" fill="none" stroke={active.color} strokeWidth="0.5" strokeDasharray="2 12" />
+                            <circle cx="400" cy="400" r="390" fill="none" stroke={active.color} strokeWidth="0.3" strokeDasharray="1 16" />
+                        </svg>
+                    </motion.div>
+                )}
 
                 {/* Grid lines */}
                 <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
