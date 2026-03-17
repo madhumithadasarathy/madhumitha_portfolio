@@ -1,165 +1,193 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const services = [
     {
         id: 'web',
-        title: 'Web & UI',
-        description: 'Pixel-perfect, interactive user interfaces.',
+        sysId: '01 // WEB_INTERFACE',
+        title: 'Web & UI Dev',
+        skills: ['React', 'Tailwind', 'Three.js'],
+        description: 'Crafting pixel-perfect, highly interactive user experiences. Designing terminal-like interfaces and modern glassmorphism layouts that prioritize seamless human-computer interaction.',
         color: '#06b6d4', // cyan
-        glowProps: { borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%', rotate: 0 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 70%)',
     },
     {
         id: 'fullstack',
-        title: 'Full Stack',
-        description: 'Robust backends meeting dynamic frontends.',
+        sysId: '02 // CORE_SYSTEMS',
+        title: 'Full Stack Dev',
+        skills: ['Python', 'Java', 'APIs'],
+        description: 'Architecting robust, scalable backends that meet dynamic frontends. Building secure, high-throughput architectures capable of processing massive data loads.',
         color: '#d946ef', // fuchsia
-        glowProps: { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%', rotate: 45 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(217, 70, 239, 0.1) 0%, transparent 70%)',
     },
     {
         id: 'app',
+        sysId: '03 // MOBILE_UPLINK',
         title: 'App Dev',
-        description: 'High-performance cross-platform mobile experiences.',
+        skills: ['Cross-platform', 'UI/UX', 'Performance'],
+        description: 'Deploying high-performance, cross-platform mobile experiences. Optimized for low latency and maximum user engagement across diverse device ecosystems.',
         color: '#f97316', // orange
-        glowProps: { borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%', rotate: 90 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 70%)',
     },
     {
         id: 'ai',
+        sysId: '04 // NEURAL_NETS',
         title: 'AI & ML',
-        description: 'Data-driven algorithms and predictive models.',
+        skills: ['TensorFlow', 'Data Science', 'Predictive'],
+        description: 'Training deep neural networks and machine learning models to extract actionable intelligence. Implementing predictive algorithms to solve complex real-world variables.',
         color: '#00e639', // neon green
-        glowProps: { borderRadius: '50% 50% 20% 80% / 25% 80% 20% 75%', rotate: 135 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(0, 230, 57, 0.1) 0%, transparent 70%)',
     },
     {
         id: 'genai',
+        sysId: '05 // GEN_SYNTHESIS',
         title: 'Generative AI',
-        description: 'Automating creativity with cutting-edge models.',
+        skills: ['LLMs', 'Transformers', 'Automation'],
+        description: 'Harnessing the power of large language models and generative structures to automate creativity, synthesize data, and build autonomous agents.',
         color: '#facc15', // yellow
-        glowProps: { borderRadius: '70% 30% 50% 50% / 30% 30% 70% 70%', rotate: 180 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.1) 0%, transparent 70%)',
     },
     {
         id: 'iot',
+        sysId: '06 // HARDWARE_LINK',
         title: 'Embedded/IoT',
-        description: 'Bridging software with smart physical systems.',
+        skills: ['Microcontrollers', 'Sensors', 'C++'],
+        description: 'Bridging the digital and physical divide. Programming microcontrollers and sensor arrays to construct intelligent, interconnected hardware ecosystems.',
         color: '#10b981', // emerald
-        glowProps: { borderRadius: '30% 70% 50% 50% / 50% 50% 50% 50%', rotate: 225 }
+        bgPattern: 'radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 70%)',
     },
 ];
 
 export default function WhatIDo() {
+    // Default to the first item being active on large screens
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
-        <section id="services" className="relative py-32 bg-dark overflow-hidden min-h-screen flex items-center">
-            {/* Background noise/grid */}
-            <div className="absolute inset-0 bg-checkerboard opacity-[0.03] pointer-events-none" />
+        <section id="services" className="relative py-24 bg-[#050505] overflow-hidden min-h-[90vh] flex flex-col justify-center">
+            {/* Ambient background noise */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
             
-            <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 w-full relative z-10">
+            <div className="max-w-[1400px] mx-auto px-4 md:px-8 w-full relative z-10 flex flex-col items-center">
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
-                    
-                    {/* LEFT SIDE: Giant Typography List */}
-                    <div className="flex flex-col gap-4 lg:gap-6">
-                        <motion.div 
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                {/* Sci-Fi Header */}
+                <div className="w-full text-left mb-12 border-b border-dark-border/50 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <motion.div
+                            initial={{ opacity: 0, scaleX: 0 }}
+                            whileInView={{ opacity: 1, scaleX: 1 }}
                             viewport={{ once: true }}
-                            className="mb-8"
-                        >
-                            <span className="text-neon text-sm font-mono tracking-[0.2em] uppercase block mb-2">Capabilities</span>
-                            <h2 className="text-3xl md:text-5xl font-bold text-white">
-                                What I <span className="text-dark-card bg-neon px-2 rounded-lg inline-block transform -rotate-2">Do</span>
-                            </h2>
-                        </motion.div>
-
-                        <div className="flex flex-col relative" onMouseLeave={() => setActiveIndex(0)}>
-                            {services.map((service, index) => {
-                                const isActive = activeIndex === index;
-                                return (
-                                    <div 
-                                        key={service.id}
-                                        onMouseEnter={() => setActiveIndex(index)}
-                                        onClick={() => setActiveIndex(index)}
-                                        className="py-3 md:py-4 cursor-pointer group flex items-center"
-                                    >
-                                        <div className="overflow-hidden flex items-center">
-                                            <motion.span 
-                                                className="text-white font-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter transition-all duration-500 ease-out"
-                                                animate={{
-                                                    color: isActive ? '#fff' : '#ffffff20',
-                                                    x: isActive ? 20 : 0,
-                                                }}
-                                                style={{ 
-                                                    WebkitTextStroke: isActive ? 'none' : '1px rgba(255,255,255,0.1)',
-                                                }}
-                                            >
-                                                {service.title}
-                                            </motion.span>
-                                            
-                                            {/* Small dot indicator that appears next to active item */}
-                                            <motion.div 
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                animate={{ 
-                                                    scale: isActive ? 1 : 0,
-                                                    opacity: isActive ? 1 : 0
-                                                }}
-                                                className="ml-6 w-3 h-3 rounded-full"
-                                                style={{ backgroundColor: service.color, boxShadow: `0 0 15px ${service.color}` }}
-                                            />
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                            transition={{ duration: 0.8, ease: "circOut" }}
+                            className="h-[2px] w-16 bg-neon mb-4 origin-left"
+                        />
+                        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mix-blend-difference">
+                            SYSTEM <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(90deg, #fff, #555)' }}>MODULES</span>
+                        </h2>
                     </div>
+                    <div className="flex gap-4 text-xs font-mono text-dark-text uppercase tracking-widest hidden md:flex">
+                        <span>STATUS: <span className="text-neon">ONLINE</span></span>
+                        <span>//</span>
+                        <span>CAPACITIES: <span className="text-white">OPTIMIZED</span></span>
+                    </div>
+                </div>
 
-                    {/* RIGHT SIDE: Interactive Morphing Orb & Description */}
-                    <div className="relative h-[400px] lg:h-[600px] flex items-center justify-center">
-                        <AnimatePresence mode="wait">
-                            <motion.div 
-                                key={activeIndex}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.1 }}
-                                transition={{ duration: 0.5, ease: "easeOut" }}
-                                className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+                {/* Expanding Accordion Container */}
+                <div className="flex flex-col lg:flex-row h-[70vh] lg:h-[650px] w-full gap-2 lg:gap-4 transition-all duration-500">
+                    
+                    {services.map((service, index) => {
+                        const isActive = activeIndex === index;
+
+                        return (
+                            <div
+                                key={service.id}
+                                onClick={() => setActiveIndex(index)}
+                                onMouseEnter={() => setActiveIndex(index)}
+                                className={`relative overflow-hidden rounded-2xl cursor-pointer group transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-end border ${
+                                    isActive ? `border-[${service.color}]/40` : 'border-white/5'
+                                }`}
+                                style={{
+                                    flex: isActive ? '5 1 0%' : '1 1 0%',
+                                    minHeight: isActive ? '300px' : '60px', // for mobile vertical stacking
+                                    background: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%), ${service.bgPattern}, #0a0a0a`
+                                }}
                             >
-                                {/* Morphing Background Orb */}
-                                <motion.div 
-                                    className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] blur-[60px] opacity-40 mix-blend-screen"
-                                    animate={{ 
-                                        backgroundColor: services[activeIndex].color,
-                                        ...services[activeIndex].glowProps
-                                    }}
-                                    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }}
-                                />
-                                
-                                {/* Sharp glowing border ring */}
-                                <motion.div 
-                                    className="absolute w-[300px] h-[300px] md:w-[450px] md:h-[450px] border border-white/10"
-                                    animate={{ 
-                                        borderColor: `${services[activeIndex].color}40`,
-                                        ...services[activeIndex].glowProps,
-                                        rotate: services[activeIndex].glowProps.rotate + 180
-                                    }}
-                                    transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-                                />
+                                {/* Sci-Fi Overlay Grid & Scanline */}
+                                {isActive && (
+                                    <>
+                                        <div className="absolute inset-0 opacity-20 pointer-events-none" 
+                                             style={{
+                                                 backgroundImage: `linear-gradient(${service.color} 1px, transparent 1px), linear-gradient(90deg, ${service.color} 1px, transparent 1px)`,
+                                                 backgroundSize: '30px 30px',
+                                             }}
+                                        />
+                                        <motion.div 
+                                            className="absolute top-0 left-0 w-full h-[2px] opacity-50 blur-[1px] pointer-events-none"
+                                            style={{ backgroundColor: service.color, boxShadow: `0 0 20px 2px ${service.color}` }}
+                                            animate={{ top: ['0%', '100%'] }}
+                                            transition={{ duration: 3, ease: 'linear', repeat: Infinity }}
+                                        />
+                                    </>
+                                )}
 
-                                <div className="relative z-20 max-w-sm glassmorphism p-8 border border-white/5 rounded-2xl">
-                                    <h3 
-                                        className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent"
-                                        style={{ backgroundImage: `linear-gradient(to right, #fff, ${services[activeIndex].color})` }}
-                                    >
-                                        {services[activeIndex].title}
-                                    </h3>
-                                    <p className="text-dark-text text-lg">
-                                        {services[activeIndex].description}
-                                    </p>
+                                {/* Collapsed State: Vertical Text (Desktop) / Horizontal Text (Mobile) */}
+                                <div className={`absolute top-0 left-0 w-full h-full p-4 md:p-6 flex flex-row lg:flex-col lg:items-center lg:justify-start justify-between transition-opacity duration-300 ${isActive ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                                    <span className="font-mono text-sm tracking-widest text-white/50 lg:rotate-90 lg:mt-8">{service.title}</span>
+                                    <span className="font-mono text-xs text-white/20 lg:mb-4 lg:hidden">{`0${index + 1}`}</span>
                                 </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
 
+                                {/* Expanded State Content */}
+                                <div className={`relative z-10 p-6 md:p-10 flex flex-col justify-end h-full transition-opacity duration-700 delay-100 ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                                    
+                                    {/* Top-right System ID */}
+                                    <div className="absolute top-6 right-6 font-mono text-xs tracking-widest opacity-60 hidden md:block" style={{ color: service.color }}>
+                                        {service.sysId}
+                                    </div>
+
+                                    {/* Expanding Divider Line */}
+                                    <motion.div 
+                                        className="h-[1px] bg-white/20 mb-6 hidden md:block"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: isActive ? '100%' : '0%' }}
+                                        transition={{ duration: 0.8, delay: 0.2 }}
+                                    />
+
+                                    <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: isActive ? 0 : 20, opacity: isActive ? 1 : 0 }}
+                                        transition={{ duration: 0.5, delay: 0.2 }}
+                                    >
+                                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight drop-shadow-2xl">
+                                            {service.title}
+                                        </h3>
+                                        
+                                        <p className="text-dark-text text-sm md:text-base lg:text-lg mb-6 max-w-2xl leading-relaxed">
+                                            {service.description}
+                                        </p>
+
+                                        {/* Tech Tags */}
+                                        <div className="flex flex-wrap gap-3">
+                                            {service.skills.map((skill, i) => (
+                                                <span 
+                                                    key={i} 
+                                                    className="px-3 py-1 font-mono text-[10px] md:text-xs tracking-wider border border-white/10 rounded-full backdrop-blur-md"
+                                                    style={{ color: service.color, backgroundColor: `${service.color}10` }}
+                                                >
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                </div>
+
+                                {/* Edge Glow for active item */}
+                                {isActive && (
+                                    <div 
+                                        className="absolute bottom-0 left-0 w-full h-[2px] transition-all duration-700 shadow-2xl" 
+                                        style={{ backgroundColor: service.color, boxShadow: `0 -10px 40px ${service.color}` }}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>
