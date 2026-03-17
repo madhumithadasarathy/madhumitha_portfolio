@@ -117,7 +117,7 @@ export default function Timeline() {
     const active = milestones[activeIndex];
 
     return (
-        <section id="timeline" ref={containerRef} className="relative bg-dark" style={{ height: isMobile ? `${milestones.length * 70}vh` : `${milestones.length * 100}vh` }}>
+        <section id="timeline" ref={containerRef} className="hidden lg:block relative bg-dark" style={{ height: isMobile ? `${milestones.length * 70}vh` : `${milestones.length * 100}vh` }}>
             <div className="sticky top-0 h-screen overflow-hidden flex items-center" style={{ willChange: 'transform' }}>
 
                 {/* ═══ BACKGROUND LAYERS ═══ */}
