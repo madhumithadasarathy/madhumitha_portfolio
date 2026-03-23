@@ -133,7 +133,7 @@ export default function WhatIDo() {
         if (isPaused) return;
         const interval = setInterval(() => {
             setActiveIndex(prev => (prev + 1) % services.length);
-        }, 4000);
+        }, 8000);
         return () => clearInterval(interval);
     }, [isPaused]);
 
