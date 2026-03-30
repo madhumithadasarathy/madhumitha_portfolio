@@ -8,9 +8,10 @@ const channels = [
         title: 'Drawing',
         network: 'ART-TV',
         show: '"The Sketchbook Sessions"',
-        tagline: 'Where imagination meets paper. Creating worlds with just a pencil.',
-        image: '/hobbies/drawing.png',
+        tagline: 'Where imagination meets paper. From traditional Indian art to modern illustrations.',
+        image: '/hobbies/drawing.jpg',
         color: '#f472b6',
+        link: 'https://artsbymadhumitha.netlify.app',
     },
     {
         id: 'piano',
@@ -221,6 +222,23 @@ export default function Hobbies() {
                                                         <h3 className="text-2xl md:text-4xl font-black text-white mb-1 tracking-tight">{channel.title}</h3>
                                                         <p className="text-white/50 text-xs md:text-sm italic mb-2">{channel.show}</p>
                                                         <p className="text-white/60 text-sm md:text-base max-w-md">{channel.tagline}</p>
+                                                        
+                                                        {channel.link && (
+                                                            <a
+                                                                href={channel.link}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-lg font-mono text-xs tracking-wider uppercase transition-all duration-300 hover:scale-105 active:scale-95 border"
+                                                                style={{
+                                                                    backgroundColor: `${channel.color}20`,
+                                                                    borderColor: `${channel.color}50`,
+                                                                    color: channel.color,
+                                                                }}
+                                                            >
+                                                                🎨 Visit My Gallery
+                                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                                                            </a>
+                                                        )}
                                                     </div>
 
                                                     {/* REC indicator */}
