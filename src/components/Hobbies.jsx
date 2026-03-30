@@ -126,7 +126,7 @@ export default function Hobbies() {
     const channel = channels[currentChannel];
 
     return (
-        <section id="hobbies" className="relative py-20 md:py-32 bg-[#030303] overflow-hidden min-h-screen flex flex-col justify-center">
+        <section id="hobbies" className="relative py-20 md:py-32 bg-[#030303] overflow-hidden min-h-screen">
             {/* Ambient glow behind TV */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
