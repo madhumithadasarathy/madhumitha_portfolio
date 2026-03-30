@@ -20,7 +20,7 @@ const channels = [
         network: 'MELODY-FM',
         show: '"Keys & Emotions"',
         tagline: 'Every key pressed is a feeling expressed. Classical to contemporary.',
-        image: '/hobbies/piano.png',
+        image: '/hobbies/piano.jpg',
         color: '#a78bfa',
     },
     {
@@ -30,7 +30,7 @@ const channels = [
         network: 'MELODY-FM',
         show: '"Breath of Music"',
         tagline: 'Melodies carried by breath. The most soulful wind instrument.',
-        image: '/hobbies/flute.png',
+        image: '/hobbies/flute.jpg',
         color: '#67e8f9',
     },
     {
@@ -40,7 +40,7 @@ const channels = [
         network: 'MELODY-FM',
         show: '"String Theory"',
         tagline: 'Strings that touch the soul. From classical ragas to western concertos.',
-        image: '/hobbies/violin.png',
+        image: '/hobbies/violin.jpg',
         color: '#fbbf24',
     },
     {
@@ -50,7 +50,7 @@ const channels = [
         network: 'BRAIN-NET',
         show: '"Between the Pages"',
         tagline: 'Lost in worlds of words. Fiction, philosophy, and everything in between.',
-        image: '/hobbies/books.png',
+        image: '/hobbies/books.jpg',
         color: '#34d399',
     },
     {
@@ -60,7 +60,7 @@ const channels = [
         network: 'BRAIN-NET',
         show: '"Tuned In"',
         tagline: 'Tuning into brilliant minds. Ideas, stories, and conversations that inspire.',
-        image: '/hobbies/podcasts.png',
+        image: '/hobbies/podcasts.jpg',
         color: '#fb923c',
     },
     {
@@ -70,7 +70,7 @@ const channels = [
         network: 'BINGE-TV',
         show: '"The Watchlist"',
         tagline: 'Binge-worthy storytelling. If it has good writing, I\'m watching it.',
-        image: '/hobbies/series.png',
+        image: '/hobbies/series.jpg',
         color: '#f87171',
     },
 ];
