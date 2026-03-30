@@ -154,7 +154,7 @@ export default function WhatIDo() {
     }, []);
 
     return (
-        <section id="services" className="relative py-20 md:py-32 bg-[#030303] overflow-hidden">
+        <section id="services" className="relative py-20 md:py-32 bg-[#030303] overflow-hidden min-h-screen flex flex-col justify-center">
             {/* Background grid */}
             <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
                 style={{
