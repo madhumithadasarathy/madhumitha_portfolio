@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 // ===== ADD YOUR ACHIEVEMENTS HERE =====
@@ -143,6 +144,8 @@ function AchievementPost({ achievement, index }) {
 }
 
 export default function Achievements() {
+    const [isFollowing, setIsFollowing] = useState(false);
+
     return (
         <div className="min-h-screen bg-[#030303] pt-24 pb-20">
             {/* Background grid */}
@@ -187,12 +190,24 @@ export default function Achievements() {
                                     <path d="M10 15.5L7.5 13L8.91 11.59L10 12.67L15.09 7.59L16.5 9L10 15.5Z" fill="white" />
                                 </svg>
                                 <div className="flex gap-2">
-                                    <button className="px-5 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white text-sm font-semibold rounded-lg transition-colors duration-200">
-                                        Following
+                                    <button
+                                        onClick={() => setIsFollowing(!isFollowing)}
+                                        className={`px-5 py-1.5 text-sm font-semibold rounded-lg transition-all duration-300 ${
+                                            isFollowing
+                                                ? 'bg-[#363636] hover:bg-[#4a4a4a] text-white'
+                                                : 'bg-[#0095F6] hover:bg-[#1877F2] text-white'
+                                        }`}
+                                    >
+                                        {isFollowing ? 'Following' : 'Follow'}
                                     </button>
-                                    <button className="px-5 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white text-sm font-semibold rounded-lg transition-colors duration-200">
+                                    <a
+                                        href="https://www.linkedin.com/in/madhudasarat"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-5 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white text-sm font-semibold rounded-lg transition-colors duration-200 inline-flex items-center"
+                                    >
                                         Message
-                                    </button>
+                                    </a>
                                     <button className="px-2 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white rounded-lg transition-colors duration-200">
                                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
                                     </button>
@@ -224,50 +239,6 @@ export default function Achievements() {
                                 <a href="/" className="text-[#E0F2FE] font-semibold hover:underline mt-1 inline-block">madhumitha-portfolio.dev</a>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Story Highlights */}
-                    <div className="border-t border-white/[0.06] pt-5 pb-4">
-                        <div className="flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide px-2 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                            {[
-                                { label: 'Drawing', image: '/hobbies/drawing.jpg' },
-                                { label: 'Piano', image: '/hobbies/piano.jpg' },
-                                { label: 'Flute', image: '/hobbies/flute.jpg' },
-                                { label: 'Violin', image: '/hobbies/violin.jpg' },
-                                { label: 'Books', image: '/hobbies/books.jpg' },
-                                { label: 'Podcasts', image: '/hobbies/podcasts.jpg' },
-                                { label: 'Series', image: '/hobbies/series.jpg' },
-                            ].map((story) => (
-                                <div key={story.label} className="flex flex-col items-center gap-1.5 flex-shrink-0 cursor-pointer group">
-                                    <div className="w-[66px] h-[66px] md:w-[77px] md:h-[77px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2.5px] group-hover:scale-105 transition-transform duration-200">
-                                        <div className="w-full h-full rounded-full border-[3px] border-black overflow-hidden">
-                                            <img
-                                                src={story.image}
-                                                alt={story.label}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-                                    </div>
-                                    <span className="text-white/60 text-[11px] font-normal truncate max-w-[72px] text-center group-hover:text-white/90 transition-colors">{story.label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Tab Bar */}
-                    <div className="flex border-t border-white/[0.06]">
-                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 border-t border-white text-white text-xs font-semibold tracking-wider uppercase -mt-px">
-                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" /></svg>
-                            <span className="hidden md:inline">Posts</span>
-                        </button>
-                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 text-white/40 text-xs font-semibold tracking-wider uppercase hover:text-white/60 transition-colors">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
-                            <span className="hidden md:inline">Reels</span>
-                        </button>
-                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 text-white/40 text-xs font-semibold tracking-wider uppercase hover:text-white/60 transition-colors">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 4H8a4 4 0 00-4 4v8a4 4 0 004 4h8a4 4 0 004-4V8a4 4 0 00-4-4z"/><circle cx="12" cy="12" r="3"/></svg>
-                            <span className="hidden md:inline">Tagged</span>
-                        </button>
                     </div>
                 </motion.div>
 
