@@ -13,7 +13,7 @@ const achievements = [
     {
         id: 4,
         title: 'School Topper in 12th Grade',
-        description: 'Being recognised as the School Topper in 12th grade and securing the first place in subjects like French, English, Chemistry, Computer Science and Mathematics.',
+        description: 'Being recognised as the School Topper in 12th grade and securing the first place in French, English, Chemistry, Computer Science and Mathematics.',
         year: '2022',
         place: "St. Ursula's Anglo Indian Higher Secondary School",
         image: '/achievements/achievement1.jpg',
@@ -118,7 +118,7 @@ function AchievementPost({ achievement, index }) {
                 {/* Caption */}
                 <div className="text-sm">
                     <span className="text-white font-semibold mr-2">madhumitha</span>
-                    <span className="text-white/90">{achievement.title} — {achievement.description}</span>
+                    <span className="text-white/90">{achievement.title}: {achievement.description}</span>
                 </div>
 
                 {/* Tags */}
