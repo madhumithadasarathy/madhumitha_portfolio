@@ -153,24 +153,122 @@ export default function Achievements() {
                 }}
             />
 
-            <div className="max-w-[900px] mx-auto px-4 md:px-8 relative z-10">
-                {/* Page Header */}
+            <div className="max-w-[935px] mx-auto px-4 md:px-8 relative z-10">
+                {/* ===== INSTAGRAM PROFILE HEADER ===== */}
                 <motion.div
-                    className="text-center mb-10"
+                    className="mb-0"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 border border-neon/20 rounded-full bg-neon/5">
-                        <span className="text-lg">🏆</span>
-                        <span className="text-neon text-xs font-mono tracking-[0.3em] uppercase">Hall of Fame</span>
+                    {/* Top Profile Section */}
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 py-8 md:py-10">
+                        {/* Profile Picture */}
+                        <div className="flex-shrink-0">
+                            <div className="w-[86px] h-[86px] md:w-[150px] md:h-[150px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[3px] md:p-[4px]">
+                                <div className="w-full h-full rounded-full border-[3px] border-black overflow-hidden">
+                                    <img
+                                        src="/madhu.jpg"
+                                        alt="Madhumitha"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Profile Info */}
+                        <div className="flex-1 text-center md:text-left">
+                            {/* Username Row */}
+                            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-5 mb-4">
+                                <h1 className="text-xl font-normal text-white tracking-wide">madhumitha_d</h1>
+                                {/* Verified Badge */}
+                                <svg className="w-[18px] h-[18px] text-[#3897f0] -ml-3 md:ml-0" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L14.09 4.26L17 3.29L17.34 6.34L20.39 6.68L19.42 9.59L21.68 11.68L19.74 14.09L21 17L18.06 17.71L17.34 20.66L14.43 19.74L12 22L9.57 19.74L6.66 20.66L5.94 17.71L3 17L4.26 14.09L2.32 11.68L4.58 9.59L3.61 6.68L6.66 6.34L7 3.29L9.91 4.26L12 2Z" />
+                                    <path d="M10 15.5L7.5 13L8.91 11.59L10 12.67L15.09 7.59L16.5 9L10 15.5Z" fill="white" />
+                                </svg>
+                                <div className="flex gap-2">
+                                    <button className="px-5 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white text-sm font-semibold rounded-lg transition-colors duration-200">
+                                        Following
+                                    </button>
+                                    <button className="px-5 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white text-sm font-semibold rounded-lg transition-colors duration-200">
+                                        Message
+                                    </button>
+                                    <button className="px-2 py-1.5 bg-[#363636] hover:bg-[#4a4a4a] text-white rounded-lg transition-colors duration-200">
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Stats Row */}
+                            <div className="flex justify-center md:justify-start gap-8 md:gap-10 mb-5">
+                                <div className="text-center md:text-left">
+                                    <span className="text-white font-bold">{achievements.length}</span>
+                                    <span className="text-white/60 text-sm ml-1">posts</span>
+                                </div>
+                                <div className="text-center md:text-left cursor-pointer hover:opacity-70 transition-opacity">
+                                    <span className="text-white font-bold">2,847</span>
+                                    <span className="text-white/60 text-sm ml-1">followers</span>
+                                </div>
+                                <div className="text-center md:text-left cursor-pointer hover:opacity-70 transition-opacity">
+                                    <span className="text-white font-bold">486</span>
+                                    <span className="text-white/60 text-sm ml-1">following</span>
+                                </div>
+                            </div>
+
+                            {/* Bio */}
+                            <div className="text-sm leading-relaxed">
+                                <div className="text-white font-semibold">Madhumitha Dasarathy</div>
+                                <div className="text-white/60 mt-0.5">🎓 Student · Developer · Artist · Musician</div>
+                                <div className="text-white/80 mt-1">Collecting milestones, one achievement at a time 🏆</div>
+                                <div className="text-white/80">Building cool things & breaking boundaries ✨</div>
+                                <a href="/" className="text-[#E0F2FE] font-semibold hover:underline mt-1 inline-block">madhumitha-portfolio.dev</a>
+                            </div>
+                        </div>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tight">
-                        Achieve<span className="text-neon">ments</span>
-                    </h1>
-                    <p className="text-dark-text text-sm md:text-base mt-3 max-w-md mx-auto">
-                        A timeline of milestones, awards, and accomplishments.
-                    </p>
+
+                    {/* Story Highlights */}
+                    <div className="border-t border-white/[0.06] pt-5 pb-4">
+                        <div className="flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide px-2 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                            {[
+                                { label: 'Drawing', image: '/hobbies/drawing.jpg' },
+                                { label: 'Piano', image: '/hobbies/piano.jpg' },
+                                { label: 'Flute', image: '/hobbies/flute.jpg' },
+                                { label: 'Violin', image: '/hobbies/violin.jpg' },
+                                { label: 'Books', image: '/hobbies/books.jpg' },
+                                { label: 'Podcasts', image: '/hobbies/podcasts.jpg' },
+                                { label: 'Series', image: '/hobbies/series.jpg' },
+                            ].map((story) => (
+                                <div key={story.label} className="flex flex-col items-center gap-1.5 flex-shrink-0 cursor-pointer group">
+                                    <div className="w-[66px] h-[66px] md:w-[77px] md:h-[77px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2.5px] group-hover:scale-105 transition-transform duration-200">
+                                        <div className="w-full h-full rounded-full border-[3px] border-black overflow-hidden">
+                                            <img
+                                                src={story.image}
+                                                alt={story.label}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                    <span className="text-white/60 text-[11px] font-normal truncate max-w-[72px] text-center group-hover:text-white/90 transition-colors">{story.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Tab Bar */}
+                    <div className="flex border-t border-white/[0.06]">
+                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 border-t border-white text-white text-xs font-semibold tracking-wider uppercase -mt-px">
+                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" /></svg>
+                            <span className="hidden md:inline">Posts</span>
+                        </button>
+                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 text-white/40 text-xs font-semibold tracking-wider uppercase hover:text-white/60 transition-colors">
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+                            <span className="hidden md:inline">Reels</span>
+                        </button>
+                        <button className="flex-1 flex items-center justify-center gap-1.5 py-3 text-white/40 text-xs font-semibold tracking-wider uppercase hover:text-white/60 transition-colors">
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 4H8a4 4 0 00-4 4v8a4 4 0 004 4h8a4 4 0 004-4V8a4 4 0 00-4-4z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <span className="hidden md:inline">Tagged</span>
+                        </button>
+                    </div>
                 </motion.div>
 
                 {/* Achievement Posts */}
