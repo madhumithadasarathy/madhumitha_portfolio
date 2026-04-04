@@ -16,7 +16,7 @@ const achievements = [
         description: 'Being recognised as the School Topper in 12th grade and securing the first place in subjects like French, English, Chemistry, Computer Science and Mathematics.',
         year: '2022',
         place: "St. Ursula's Anglo Indian Higher Secondary School",
-        image: null,
+        image: '/achievements/achievement1.jpg',
         tags: ['SchoolTopper', '12thGrade', 'Academics'],
     },
     {
