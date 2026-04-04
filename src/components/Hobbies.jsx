@@ -127,7 +127,7 @@ export default function Hobbies() {
     const channel = channels[currentChannel];
 
     return (
-        <section id="hobbies" className="relative py-20 md:py-32 bg-[#030303] overflow-hidden min-h-screen">
+        <section id="hobbies" className="relative py-12 md:py-16 bg-[#030303] overflow-hidden">
             {/* Ambient glow behind TV */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
@@ -136,10 +136,10 @@ export default function Hobbies() {
                 />
             </div>
 
-            <div className="max-w-[1500px] mx-auto px-4 md:px-8 relative z-10">
+            <div className="max-w-[1200px] mx-auto px-4 md:px-8 relative z-10">
                 {/* Header */}
                 <motion.div
-                    className="text-center mb-12 md:mb-16"
+                    className="text-center mb-8 md:mb-10"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
