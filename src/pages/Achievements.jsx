@@ -21,12 +21,12 @@ const achievements = [
     },
     {
         id: 1,
-        title: 'Achievement Title Here',
-        description: 'Describe your achievement in detail. What did you do? What impact did it have? Share your story here.',
-        year: '2025',
-        place: 'City, Country',
-        image: null, // Replace with: '/achievements/your-image.jpg'
-        tags: ['Tag1', 'Tag2'],
+        title: 'EXPO-A-THON — AIRO 2.0',
+        description: 'Proud to have secured third place at EXPO-A-THON, held as part of the international symposium AIRO 2.0, organized by the Department of Artificial Intelligence and Data Science. Competing alongside talented peers at an event of this scale was both challenging and rewarding. Moments like these reinforce why I value continuous learning — every competition is an opportunity to grow, adapt, and come back stronger. Grateful to the organizers and faculty for putting together such a well-run event.',
+        year: 'FEBRUARY 3, 2023',
+        place: 'Sri Sairam Engineering College',
+        image: '/achievements/achievement2.jpeg',
+        tags: ['ExpoAThon', 'AIRO2', 'Innovation', 'AI', 'Symposium', 'ThirdPlace'],
     },
     {
         id: 2,
