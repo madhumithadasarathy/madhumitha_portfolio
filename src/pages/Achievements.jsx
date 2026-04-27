@@ -22,7 +22,7 @@ const achievements = [
     {
         id: 1,
         title: 'EXPO-A-THON — AIRO 2.0',
-        description: 'Proud to have secured third place at EXPO-A-THON, held as part of the international symposium AIRO 2.0, organized by the Department of Artificial Intelligence and Data Science. Competing alongside talented peers at an event of this scale was both challenging and rewarding. Moments like these reinforce why I value continuous learning — every competition is an opportunity to grow, adapt, and come back stronger. Grateful to the organizers and faculty for putting together such a well-run event.',
+        description: 'Proud to have secured third place at EXPO-A-THON, held as part of the international symposium AIRO 2.0, organized by the Department of Artificial Intelligence and Data Science.',
         year: 'FEBRUARY 3, 2023',
         place: 'Sri Sairam Engineering College',
         image: '/achievements/achievement2.jpeg',
@@ -30,12 +30,12 @@ const achievements = [
     },
     {
         id: 2,
-        title: 'Another Achievement',
-        description: 'Add another achievement description here. You can have as many entries as you want.',
-        year: '2024',
-        place: 'City, Country',
-        image: null,
-        tags: ['Tag1', 'Tag2'],
+        title: 'Project Expo — First Place',
+        description: 'Secured first place at the Project Expo held by the Department of Artificial Intelligence and Machine Learning for our project on Ovarian Cancer Detection.',
+        year: 'SEPTEMBER 4, 2024',
+        place: 'Sri Sairam Engineering College',
+        image: '/achievements/achievement3.jpg',
+        tags: ['ProjectExpo', 'FirstPlace', 'OvarianCancerDetection', 'AI', 'ML', 'HealthcareAI'],
     },
     {
         id: 3,
