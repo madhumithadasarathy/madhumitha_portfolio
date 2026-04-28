@@ -1,11 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import anime from 'animejs';
 
 const Intro = ({ onComplete }) => {
+  const [isInitiated, setIsInitiated] = useState(false);
+  const cockpitRef = useRef(null);
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    // Create the master timeline
+  const modules = [
+    { id: 'ai', label: 'AI ENGINE' },
+    { id: 'cv', label: 'CV MODULE' },
+    { id: 'stack', label: 'FULL STACK' },
+    { id: 'ui', label: 'UI INTERFACE' },
+    { id: 'gen', label: 'GEN AI' }
+  ];
+
+  const handleInitiate = () => {
+    if (isInitiated) return;
+    setIsInitiated(true);
+    startTakeoffSequence();
+  };
+
+  const startTakeoffSequence = () => {
     const timeline = anime.timeline({
       easing: 'easeOutExpo',
       complete: () => {
@@ -13,274 +28,211 @@ const Intro = ({ onComplete }) => {
       }
     });
 
-    // STEP 1: BACKGROUND & DATA STREAMS
+    // 1. Switches Toggling ON & Indicators
     timeline.add({
-      targets: '.grid-line',
-      opacity: [0, 0.1],
-      strokeDashoffset: [anime.setDashoffset, 0],
-      duration: 1000,
-      delay: anime.stagger(50)
+      targets: '.status-led',
+      backgroundColor: ['#333', '#A3FF12'],
+      boxShadow: ['0 0 0px #A3FF12', '0 0 15px #A3FF12'],
+      duration: 400,
+      delay: anime.stagger(150)
     })
+    // 2. Progress Bars Filling
     .add({
-      targets: '.data-stream',
-      translateX: ['-100%', '200%'],
-      opacity: [0, 0.4, 0],
-      duration: 2500,
-      loop: true,
-      easing: 'linear',
-      delay: anime.stagger(300)
-    }, 0);
-
-    // STEP 2: SYSTEM MODULES APPEARANCE (PARALLEL)
-    timeline.add({
-      targets: '.system-module',
+      targets: '.module-progress',
+      width: ['0%', '100%'],
+      duration: 1200,
+      easing: 'easeInOutQuad',
+      delay: anime.stagger(200)
+    }, '-=400')
+    // 3. Thrust Build
+    .add({
+      targets: '.thrust-bar',
+      height: ['0%', '100%'],
+      duration: 1800,
+      easing: 'easeInQuad',
+      begin: () => {
+        // Subtle Screen Shake
+        anime({
+          targets: cockpitRef.current,
+          translateX: [-1.5, 1.5],
+          translateY: [-1.5, 1.5],
+          duration: 80,
+          direction: 'alternate',
+          loop: true,
+          easing: 'linear'
+        });
+      }
+    }, '-=600')
+    // 4. Takeoff Text & Impact
+    .add({
+      targets: '.takeoff-text',
       opacity: [0, 1],
       scale: [0.8, 1],
       duration: 800,
-      delay: anime.stagger(150, { start: 500 })
-    }, 500);
-
-    // AI MODULE INTERNAL: Node Graph Animation
-    anime({
-      targets: '.ai-node',
-      r: [2, 4, 2],
-      fill: ['#A3FF12', '#FFFFFF', '#A3FF12'],
-      duration: 1500,
-      loop: true,
-      delay: anime.stagger(200)
-    });
-
-    anime({
-      targets: '.ai-connection',
-      strokeDashoffset: [anime.setDashoffset, 0],
-      opacity: [0.2, 0.8, 0.2],
-      duration: 2000,
-      loop: true,
-      easing: 'easeInOutSine',
-      delay: anime.stagger(150)
-    });
-
-    // CV MODULE INTERNAL: Bounding Boxes & Scanning
-    anime({
-      targets: '.cv-box',
-      opacity: [0.3, 1, 0.3],
-      strokeDasharray: '4 4',
-      strokeDashoffset: [anime.setDashoffset, 0],
-      duration: 1200,
-      loop: true,
-      easing: 'steps(5)',
-      delay: anime.stagger(300)
-    });
-
-    anime({
-      targets: '.cv-scanner',
-      translateY: ['0%', '100%'],
-      duration: 2000,
-      loop: true,
-      easing: 'linear'
-    });
-
-    // FULL STACK INTERNAL: Connection Pulse
-    anime({
-      targets: '.fs-link-overlay',
-      width: ['0%', '100%'],
-      opacity: [0, 1, 0],
-      duration: 1500,
-      loop: true,
-      easing: 'easeInOutQuad',
-      delay: anime.stagger(500)
-    });
-
-    // GEN AI INTERNAL: Pipeline Flow
-    anime({
-      targets: '.gen-token',
-      translateX: [0, 180],
-      opacity: [0, 1, 0],
-      duration: 1800,
-      loop: true,
-      easing: 'easeInQuad',
-      delay: anime.stagger(400)
-    });
-
-    // FRONTEND INTERNAL: Block Cascade
-    anime({
-      targets: '.fe-block',
-      opacity: [0.1, 0.6, 0.1],
-      backgroundColor: ['#111', '#A3FF12', '#111'],
-      duration: 1200,
-      loop: true,
-      delay: anime.stagger(100, { grid: [4, 4], from: 'center' })
-    });
-
-    // STEP 4: ORCHESTRATION (SYNCHRONIZATION)
-    timeline.add({
-      targets: '.system-module',
-      translateX: (el) => {
-        const zone = el.getAttribute('data-zone');
-        if (zone.includes('left')) return 100;
-        if (zone.includes('right')) return -100;
-        return 0;
-      },
-      translateY: (el) => {
-        const zone = el.getAttribute('data-zone');
-        if (zone.includes('top')) return 100;
-        if (zone.includes('bottom')) return -100;
-        return 0;
-      },
-      scale: 0.8,
-      filter: 'blur(8px)',
+      easing: 'easeOutBack'
+    }, '-=200')
+    // 5. Final Velocity Transition
+    .add({
+      targets: cockpitRef.current,
+      scale: 1.5,
+      filter: ['blur(0px)', 'blur(30px)'],
       opacity: 0,
       duration: 1200,
-      easing: 'easeInOutQuart'
-    }, 2800);
-
-    // STEP 5: TITLE IMPACT
-    timeline.add({
-      targets: '.title-impact',
-      opacity: [0, 1],
-      scale: [2, 1],
-      letterSpacing: ['30px', '8px'],
-      duration: 1200,
-      easing: 'easeOutExpo'
-    }, 3200)
-    .add({
-      targets: '.title-impact',
-      textShadow: ['0 0 0px #A3FF12', '0 0 40px #A3FF12'],
-      duration: 600
-    }, 3600)
-    .add({
-      targets: '.intro-container',
-      opacity: 0,
-      duration: 1000,
-      easing: 'linear'
-    }, 4500);
-
-  }, [onComplete]);
+      easing: 'easeInExpo'
+    }, '+=100');
+  };
 
   return (
-    <div ref={containerRef} className="intro-container fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center font-mono">
-      {/* Background Noise & Grid */}
-      <div className="absolute inset-0 opacity-[0.15] pointer-events-none" 
-           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+    <div ref={containerRef} className="intro-container fixed inset-0 z-[100] bg-black flex items-center justify-center font-mono overflow-hidden">
       
-      <svg className="absolute inset-0 w-full h-full">
-        <defs>
-          <pattern id="intro-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(163, 255, 18, 0.2)" strokeWidth="0.5" className="grid-line" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#intro-grid)" />
-      </svg>
+      {/* Subtle Background Grid */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
 
-      {/* Data Streams */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className="data-stream absolute h-[1px] bg-gradient-to-r from-transparent via-[#A3FF12] to-transparent w-[300px] opacity-0" 
-               style={{ top: `${8 + i * 8}%`, left: '-20%' }} />
-        ))}
-      </div>
+      {/* Skip Option */}
+      <button 
+        onClick={onComplete}
+        className="absolute top-10 right-10 z-[110] text-[10px] text-white/20 hover:text-[#A3FF12] tracking-[0.4em] uppercase transition-all border border-transparent hover:border-[#A3FF12]/30 px-3 py-1"
+      >
+        SKIP_LAUNCH
+      </button>
 
-      {/* TOP LEFT: FRONTEND MODULE */}
-      <div data-zone="top-left" className="system-module absolute top-12 left-12 w-56 h-56 border border-white/5 p-4 bg-white/[0.01] backdrop-blur-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-1.5 h-1.5 bg-[#A3FF12] rounded-full animate-pulse" />
-          <div className="text-[9px] text-[#A3FF12] uppercase tracking-[0.2em]">Frontend_Subsystem</div>
-        </div>
-        <div className="grid grid-cols-4 gap-2 h-40">
-          {[...Array(16)].map((_, i) => (
-            <div key={i} className="fe-block border border-white/10 rounded-sm" />
-          ))}
-        </div>
-      </div>
-
-      {/* TOP RIGHT: FULL STACK MODULE */}
-      <div data-zone="top-right" className="system-module absolute top-12 right-12 w-56 h-56 border border-white/5 p-4 bg-white/[0.01] backdrop-blur-sm">
-        <div className="flex items-center gap-2 mb-3 justify-end text-right">
-          <div className="text-[9px] text-[#A3FF12] uppercase tracking-[0.2em]">Orchestration_Core</div>
-          <div className="w-1.5 h-1.5 bg-[#A3FF12] rounded-full animate-pulse" />
-        </div>
-        <div className="flex flex-col gap-5 mt-6">
-          {['CLIENT', 'API_LAYER', 'PERSISTENCE'].map((label, i) => (
-            <div key={label} className="h-8 border border-white/10 bg-white/[0.02] relative overflow-hidden flex items-center justify-center">
-              <div className="fs-link-overlay absolute left-0 h-full bg-[#A3FF12]/10" />
-              <span className="relative z-10 text-[8px] font-bold tracking-[0.2em]">{label}</span>
-              <div className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#A3FF12]" />
-              <div className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#A3FF12]" />
+      <div ref={cockpitRef} className="relative w-full max-w-6xl px-8 md:px-20 flex flex-col items-center">
+        
+        {!isInitiated ? (
+          /* SCENE 2: INIT BUTTON */
+          <div className="flex flex-col items-center">
+            <div className="mb-12 text-center">
+              <h1 className="text-white/20 text-[10px] tracking-[1em] uppercase mb-4">Launch_Protocol_V4</h1>
+              <div className="h-px w-32 bg-white/10 mx-auto" />
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* BOTTOM LEFT: AI MODULE */}
-      <div data-zone="bottom-left" className="system-module absolute bottom-12 left-12 w-56 h-56 border border-white/5 p-4 bg-white/[0.01] backdrop-blur-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-1.5 h-1.5 bg-[#A3FF12] rounded-full animate-pulse" />
-          <div className="text-[9px] text-[#A3FF12] uppercase tracking-[0.2em]">Neural_Weights</div>
-        </div>
-        <svg className="w-full h-40 mt-2">
-          {/* Layer 1 */}
-          <circle cx="20" cy="30" r="3" fill="#A3FF12" className="ai-node" />
-          <circle cx="20" cy="70" r="3" fill="#A3FF12" className="ai-node" />
-          <circle cx="20" cy="110" r="3" fill="#A3FF12" className="ai-node" />
-          {/* Layer 2 */}
-          <circle cx="80" cy="50" r="3" fill="#A3FF12" className="ai-node" />
-          <circle cx="80" cy="90" r="3" fill="#A3FF12" className="ai-node" />
-          {/* Layer 3 */}
-          <circle cx="140" cy="70" r="3" fill="#A3FF12" className="ai-node" />
-          
-          <g className="opacity-20">
-            <path d="M 20 30 L 80 50 M 20 70 L 80 50 M 20 110 L 80 50" stroke="white" strokeWidth="0.5" fill="none" className="ai-connection" />
-            <path d="M 20 30 L 80 90 M 20 70 L 80 90 M 20 110 L 80 90" stroke="white" strokeWidth="0.5" fill="none" className="ai-connection" />
-            <path d="M 80 50 L 140 70 M 80 90 L 140 70" stroke="white" strokeWidth="0.5" fill="none" className="ai-connection" />
-          </g>
-        </svg>
-      </div>
-
-      {/* BOTTOM RIGHT: CV MODULE */}
-      <div data-zone="bottom-right" className="system-module absolute bottom-12 right-12 w-56 h-56 border border-white/5 p-4 bg-white/[0.01] backdrop-blur-sm overflow-hidden">
-        <div className="flex items-center gap-2 mb-3 justify-end text-right">
-          <div className="text-[9px] text-[#A3FF12] uppercase tracking-[0.2em]">Computer_Vision_01</div>
-          <div className="w-1.5 h-1.5 bg-[#A3FF12] rounded-full animate-pulse" />
-        </div>
-        <div className="relative h-40 border border-white/5 bg-black/40">
-          <div className="cv-scanner absolute top-0 left-0 w-full h-[1px] bg-[#A3FF12] shadow-[0_0_15px_#A3FF12] z-10" />
-          <div className="cv-box absolute top-6 left-6 w-16 h-16 border border-[#A3FF12]" />
-          <div className="cv-box absolute bottom-8 right-10 w-20 h-12 border border-white/30" />
-          <div className="absolute top-1 left-1 text-[6px] text-[#A3FF12] font-mono">FRAME_BUFFER: 60FPS</div>
-          <div className="absolute bottom-1 right-1 text-[6px] text-white/40 font-mono">X: 1024 Y: 768</div>
-        </div>
-      </div>
-
-      {/* CENTER: GEN AI MODULE */}
-      <div data-zone="center" className="system-module absolute w-80 h-40 border border-[#A3FF12]/20 p-6 bg-[#A3FF12]/[0.02] backdrop-blur-md z-20">
-        <div className="text-[10px] text-[#A3FF12] text-center mb-6 uppercase tracking-[0.4em] font-black">GenAI_Processor</div>
-        <div className="flex items-center justify-between px-2">
-          <div className="w-10 h-10 rounded-sm border border-white/10 flex items-center justify-center text-[7px] text-white/50">PROMPT</div>
-          <div className="flex-1 h-[2px] bg-white/5 relative mx-3">
-            <div className="gen-token absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-[#A3FF12] rounded-full shadow-[0_0_8px_#A3FF12]" />
-            <div className="gen-token absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-[#A3FF12] rounded-full shadow-[0_0_8px_#A3FF12]" style={{ animationDelay: '0.6s' }} />
+            
+            <button 
+              onClick={handleInitiate}
+              className="group relative px-16 py-8 border border-[#A3FF12]/40 text-[#A3FF12] tracking-[0.6em] uppercase font-black text-2xl hover:bg-[#A3FF12] hover:text-black transition-all duration-700 hover:shadow-[0_0_60px_rgba(163,255,18,0.3)] bg-black"
+            >
+              INITIATE TAKEOFF
+              {/* Animated Corner Brackets */}
+              <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-[#A3FF12] transition-all group-hover:-translate-x-2 group-hover:-translate-y-2" />
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-[#A3FF12] transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
+            </button>
+            
+            <div className="mt-12 flex gap-4 text-[9px] text-white/30 tracking-widest uppercase">
+              <span>[ OS_READY ]</span>
+              <span className="animate-pulse text-[#A3FF12]">[ WAITING_FOR_INPUT ]</span>
+              <span>[ SYNC_OK ]</span>
+            </div>
           </div>
-          <div className="w-16 h-16 border-2 border-[#A3FF12] rounded-sm flex items-center justify-center text-[12px] font-black text-[#A3FF12] bg-[#A3FF12]/10 animate-pulse">
-            LLM
+        ) : (
+          /* SCENE 1, 3, 4: COCKPIT PANEL */
+          <div className="w-full grid grid-cols-12 gap-16 items-center">
+            
+            {/* LEFT WING: Systems 1-3 */}
+            <div className="col-span-4 flex flex-col gap-10">
+              {modules.slice(0, 3).map(m => (
+                <div key={m.id} className="border border-white/5 p-5 bg-white/[0.01] relative group overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-[#A3FF12]/10" />
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] text-white/40 tracking-[0.2em]">{m.label}</span>
+                    <div className="status-led w-1.5 h-1.5 rounded-full bg-[#222]" />
+                  </div>
+                  <div className="h-0.5 bg-white/5 w-full relative">
+                    <div className="module-progress h-full bg-[#A3FF12] w-0" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CORE: Thrust & Velocity */}
+            <div className="col-span-4 flex flex-col items-center justify-center h-96 relative">
+               <div className="takeoff-text opacity-0 absolute z-30 text-center pointer-events-none">
+                  <h2 className="text-4xl font-black text-white tracking-tighter uppercase mb-3 drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">
+                    TAKEOFF <span className="text-[#A3FF12]">INITIATED</span>
+                  </h2>
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-1 h-1 bg-[#A3FF12] rounded-full animate-ping" />
+                    <div className="text-[9px] text-[#A3FF12] tracking-[0.4em] uppercase font-bold">Vector_Sync_Complete</div>
+                  </div>
+               </div>
+               
+               {/* Thrust Instrument */}
+               <div className="w-20 h-full border border-white/10 bg-white/[0.01] relative flex flex-col justify-end p-1.5 backdrop-blur-sm">
+                  <div className="thrust-bar w-full bg-gradient-to-t from-[#A3FF12] via-[#A3FF12] to-white shadow-[0_0_30px_rgba(163,255,18,0.4)] h-0 relative">
+                     <div className="absolute -top-1 left-0 w-full h-[2px] bg-white shadow-[0_0_10px_#fff]" />
+                  </div>
+                  
+                  {/* Markings */}
+                  <div className="absolute -left-14 top-0 h-full flex flex-col justify-between py-4 text-[7px] text-white/20 font-mono text-right w-10">
+                    {['MAX', '80', '60', '40', '20', 'MIN'].map(mark => (
+                      <span key={mark}>{mark}</span>
+                    ))}
+                  </div>
+                  <div className="absolute -right-24 top-1/2 -translate-y-1/2 text-[9px] text-white/20 font-black tracking-[0.5em] -rotate-90 whitespace-nowrap">
+                    VELOCITY_INDEX
+                  </div>
+                  
+                  {/* Decorative Scanline */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#A3FF12]/5 to-transparent h-20 w-full animate-[scan_3s_linear_infinite]" />
+               </div>
+            </div>
+
+            {/* RIGHT WING: Systems 4-5 & Analytics */}
+            <div className="col-span-4 flex flex-col gap-10">
+              {modules.slice(3).map(m => (
+                <div key={m.id} className="border border-white/5 p-5 bg-white/[0.01] relative group overflow-hidden">
+                  <div className="absolute top-0 right-0 w-1 h-full bg-[#A3FF12]/10" />
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] text-white/40 tracking-[0.2em]">{m.label}</span>
+                    <div className="status-led w-1.5 h-1.5 rounded-full bg-[#222]" />
+                  </div>
+                  <div className="h-0.5 bg-white/5 w-full relative">
+                    <div className="module-progress h-full bg-[#A3FF12] w-0" />
+                  </div>
+                </div>
+              ))}
+              
+              {/* Visual Data Stream */}
+              <div className="border border-white/5 p-6 bg-white/[0.01] mt-2 relative">
+                <div className="flex justify-between items-end h-16 gap-1">
+                   {[...Array(15)].map((_, i) => (
+                     <div 
+                      key={i} 
+                      className="flex-1 bg-[#A3FF12]/20" 
+                      style={{ 
+                        height: `${20 + Math.random() * 80}%`,
+                        animation: `pulse ${1 + Math.random()}s infinite ease-in-out`
+                      }} 
+                    />
+                   ))}
+                </div>
+                <div className="mt-3 text-[7px] text-white/20 flex justify-between uppercase font-mono">
+                  <span>data_sync</span>
+                  <span>99.9%_ok</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div className="flex-1 h-[2px] bg-white/5 relative mx-3">
-            <div className="gen-token absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full" />
-          </div>
-          <div className="w-10 h-10 rounded-sm border border-white/10 flex items-center justify-center text-[7px] text-white/50">OUTPUT</div>
-        </div>
+        )}
       </div>
 
-      {/* TITLE IMPACT */}
-      <div className="title-impact opacity-0 flex flex-col items-center pointer-events-none">
-        <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-widest text-center leading-none">
-          System <span className="text-[#A3FF12]">Dashboard</span>
-        </h1>
-        <div className="mt-8 h-[2px] w-80 bg-gradient-to-r from-transparent via-[#A3FF12] to-transparent" />
-        <div className="mt-6 flex gap-12 text-[10px] text-white/40 tracking-[0.5em] uppercase font-mono">
-           <span>Engine_Status: Nominal</span>
-           <span>Sync_Complete</span>
-        </div>
+      {/* Decorative Branding */}
+      <div className="absolute bottom-12 left-12 flex items-center gap-4 opacity-30">
+        <div className="w-10 h-px bg-white/40" />
+        <div className="text-[9px] text-white/40 tracking-[0.6em] uppercase">SYSTEM_LAUNCH_PROTOCOL</div>
       </div>
+
+      <style>{`
+        @keyframes scan {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(500%); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+        }
+      `}</style>
+      
     </div>
   );
 };
