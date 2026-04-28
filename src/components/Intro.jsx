@@ -1,136 +1,177 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import anime from 'animejs';
 
-const HolographicIntro = ({ onComplete }) => {
-  const [phase, setPhase] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+const Intro = ({ onComplete }) => {
   const containerRef = useRef(null);
+  const dotsRef = useRef([]);
+  const linesRef = useRef([]);
+  const modulesRef = useRef([]);
+  const categoriesRef = useRef([]);
+  const titleRef = useRef(null);
+
+  const categories = [
+    "FRONTEND", "FULL STACK", "AI / ML", "GEN AI", "COMPUTER VISION"
+  ];
 
   useEffect(() => {
-    // Cinematic Timeline
-    const timers = [
-      setTimeout(() => setPhase(1), 100),   // Start sweep
-      setTimeout(() => setPhase(2), 1000),  // Build layers
-      setTimeout(() => setPhase(3), 2000),  // Title reveal
-      setTimeout(() => setPhase(4), 3200),  // Ready
-      setTimeout(() => onComplete(), 3800)
-    ];
+    // 1. Scene setup: Create dots at random positions
+    const timeline = anime.timeline({
+      easing: 'easeOutExpo',
+      duration: 1000,
+      complete: () => {
+        // Handle auto-transition if needed, or wait for user skip
+        setTimeout(onComplete, 500);
+      }
+    });
 
-    const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window;
-      setMousePos({
-        x: (e.clientX / innerWidth) - 0.5,
-        y: (e.clientY / innerHeight) - 0.5
-      });
-    };
+    // Scene 1: SIGNAL IGNITION
+    timeline.add({
+      targets: '.signal-dot',
+      opacity: [0, 1],
+      scale: [0, 1],
+      delay: anime.stagger(50),
+      duration: 800
+    });
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      timers.forEach(t => clearTimeout(t));
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    // Scene 2: CONNECTION LINES
+    timeline.add({
+      targets: '.signal-line',
+      strokeDashoffset: [anime.setDashoffset, 0],
+      opacity: [0, 0.4],
+      duration: 1000,
+      easing: 'easeInOutSine'
+    }, '-=400');
+
+    // Scene 3: PATH FLOW (Moving dots)
+    timeline.add({
+      targets: '.path-dot',
+      translateX: [0, 200],
+      opacity: [0, 1, 0],
+      duration: 1500,
+      loop: 2,
+      easing: 'linear'
+    }, '-=800');
+
+    // Scene 4: MODULE SNAP-IN
+    timeline.add({
+      targets: '.module-box',
+      translateY: [500, 0],
+      translateX: (el, i) => [(i % 2 === 0 ? -200 : 200), 0],
+      opacity: [0, 1],
+      scale: [0.5, 1],
+      rotate: [15, 0],
+      delay: anime.stagger(100),
+      duration: 1200,
+      easing: 'easeOutExpo'
+    }, '-=1000');
+
+    // Scene 5: CATEGORY TEXT
+    timeline.add({
+      targets: '.category-text',
+      opacity: [0, 1],
+      translateY: [20, 0],
+      delay: anime.stagger(150),
+      duration: 800,
+      easing: 'easeOutQuad'
+    }, '-=600');
+
+    // Scene 6: TITLE REVEAL
+    timeline.add({
+      targets: '.title-container',
+      scale: [0.9, 1],
+      opacity: [0, 1],
+      duration: 1200,
+      easing: 'easeOutElastic(1, .8)'
+    }, '-=400');
+
+    // Extra pulse for title
+    timeline.add({
+      targets: '.title-glow',
+      opacity: [0, 0.5, 0],
+      scale: [1, 1.2],
+      duration: 2000,
+      loop: true
+    }, '-=200');
+
+    return () => timeline.pause();
   }, [onComplete]);
 
-  // Parallax multipliers for each layer
-  const calculateParallax = (factor) => ({
-    transform: `translate(${mousePos.x * factor}px, ${mousePos.y * factor}px)`,
-    transition: 'transform 0.2s ease-out'
-  });
+  const handleSkip = () => {
+    onComplete();
+  };
 
   return (
     <div 
       ref={containerRef}
-      className={`fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center transition-opacity duration-700 ${phase >= 4 ? 'opacity-0' : 'opacity-100'}`}
+      className="fixed inset-0 z-[100] bg-black overflow-hidden flex flex-col items-center justify-center cursor-pointer"
+      onClick={handleSkip}
     >
-      {/* Base Layer: Vignette and Blur */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000_100%)] z-10 pointer-events-none" />
-      
-      {/* Layer 1: Background Grid & Nodes (Deepest) */}
-      <div 
-        className="absolute inset-0 opacity-10 pointer-events-none"
-        style={{
-          ...calculateParallax(20),
-          backgroundImage: 'linear-gradient(rgba(163,255,18,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(163,255,18,0.5) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
-        }}
-      />
+      {/* Scene 1, 2, 3: Signal Layer */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+        <defs>
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="50%" stopColor="#A3FF12" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        </defs>
+        {/* Random Lines and Dots would go here - simplified for performance */}
+        <line x1="20%" y1="30%" x2="80%" y2="70%" stroke="#A3FF12" strokeWidth="1" className="signal-line" strokeDasharray="1000" />
+        <line x1="10%" y1="80%" x2="90%" y2="20%" stroke="#A3FF12" strokeWidth="1" className="signal-line" strokeDasharray="1000" />
+        <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="#A3FF12" strokeWidth="1" className="signal-line" strokeDasharray="1000" />
+      </svg>
 
-      {/* Light Sweep Animation */}
-      <div className={`absolute top-0 bottom-0 w-2 bg-gradient-to-r from-transparent via-[#A3FF12] to-transparent z-40 opacity-50 shadow-[0_0_20px_#A3FF12] pointer-events-none transition-all duration-[2000ms] ease-in-out ${phase >= 1 ? 'left-full' : '-left-10'}`} />
+      {/* Signal Dots */}
+      {[...Array(12)].map((_, i) => (
+        <div 
+          key={i}
+          className="signal-dot absolute w-1 h-1 bg-[#A3FF12] rounded-full shadow-[0_0_8px_#A3FF12]"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+          }}
+        />
+      ))}
 
-      {/* Layer 2: Dashboard Containers (Middle) */}
-      <div 
-        className={`max-w-7xl w-full px-12 relative z-20 flex flex-col gap-10 transition-all duration-1000 ${phase >= 2 ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-[0.98]'}`}
-        style={calculateParallax(40)}
-      >
-        {/* Header Glass Container */}
-        <div className="h-24 border border-white/10 bg-white/[0.03] backdrop-blur-md rounded-sm relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#A3FF12]/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-          <div className="p-8">
-            <div className="h-6 w-48 bg-white/5 rounded-sm" />
+      {/* Scene 4: Module Layer */}
+      <div className="flex flex-wrap justify-center gap-6 max-w-4xl px-12 z-10">
+        {[...Array(6)].map((_, i) => (
+          <div 
+            key={i}
+            className="module-box w-24 h-32 border border-[#A3FF12]/20 bg-white/[0.02] rounded-sm relative"
+          >
+             <div className="absolute inset-0 bg-gradient-to-br from-[#A3FF12]/5 to-transparent" />
           </div>
-        </div>
-
-        {/* Filter Bar */}
-        <div className="flex justify-center gap-4">
-          {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="h-8 w-24 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-sm" />
-          ))}
-        </div>
-
-        {/* Grid of Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="h-64 border border-white/5 bg-white/[0.02] backdrop-blur-md rounded-sm relative">
-              <div className="absolute top-4 left-4 right-4 h-32 bg-white/5 border border-white/5" />
-              <div className="absolute bottom-6 left-4 w-2/3 h-4 bg-white/10" />
-              <div className="absolute bottom-12 left-4 w-1/3 h-3 bg-white/5" />
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
 
-      {/* Layer 3: Title & Floating Elements (Foremost) */}
-      <div 
-        className={`absolute inset-0 z-50 flex flex-col items-center justify-center pointer-events-none transition-all duration-1000 ${phase >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
-        style={calculateParallax(60)}
-      >
-        <div className="text-center relative">
-          {/* Subtle Glow Behind Title */}
-          <div className="absolute inset-0 blur-3xl bg-[#A3FF12]/10 scale-150 animate-pulse" />
-          
-          <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white relative">
-            SYSTEM <span className="text-[#A3FF12] shimmer-text">DASHBOARD</span>
-          </h1>
-          
-          <div className="mt-4 flex items-center justify-center gap-3">
-             <div className="w-12 h-px bg-white/20" />
-             <span className="text-[10px] font-mono text-white/40 tracking-[0.4em] uppercase">Holographic Sync Active</span>
-             <div className="w-12 h-px bg-white/20" />
-          </div>
-        </div>
+      {/* Scene 5: Category Layer */}
+      <div className="mt-12 flex flex-wrap justify-center gap-8 z-20">
+        {categories.map((cat, i) => (
+          <span 
+            key={cat}
+            className="category-text text-[10px] font-mono font-bold tracking-[0.3em] text-[#A3FF12]/60 uppercase"
+          >
+            {cat}
+          </span>
+        ))}
       </div>
 
-      {/* CSS Animations */}
-      <style>{`
-        .shimmer-text {
-          background: linear-gradient(90deg, #A3FF12 0%, #fff 50%, #A3FF12 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: shimmer 3s linear infinite;
-        }
+      {/* Scene 6: Title Layer */}
+      <div className="title-container absolute text-center z-30 pointer-events-none">
+        <div className="title-glow absolute inset-0 bg-[#A3FF12] blur-3xl opacity-0" />
+        <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white relative">
+          SYSTEM <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.6)]">DASHBOARD</span>
+        </h1>
+        <p className="text-white/30 font-mono text-[9px] uppercase tracking-[0.5em] mt-4">
+          Click to skip sequence
+        </p>
+      </div>
 
-        @keyframes shimmer {
-          to { background-position: 200% center; }
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.05); }
-        }
-      `}</style>
+      {/* Background Grid */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(163,255,18,1) 1px, transparent 1px), linear-gradient(90deg, rgba(163,255,18,1) 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
     </div>
   );
 };
 
-export default HolographicIntro;
+export default Intro;
