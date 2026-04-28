@@ -2,42 +2,34 @@ import React, { useState } from 'react';
 import { allProjects } from '../data/projectsData';
 import DashboardCard from '../components/DashboardCard';
 import HeroSection from '../components/HeroSection';
-import Intro from '../components/Intro';
 
 const categories = ["All", "Frontend", "Full Stack", "AI / ML", "Gen AI", "Computer Vision"];
 const sections = ["Frontend", "Full Stack", "AI / ML", "Gen AI", "Computer Vision"];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [introComplete, setIntroComplete] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#020202] text-white font-poppins relative overflow-hidden flex flex-col">
-      {!introComplete && <Intro onComplete={() => setIntroComplete(true)} />}
-
-      <div 
-        className={`transition-all duration-1000 ease-in-out flex-1 ${
-          introComplete ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden scale-110 blur-xl'
-        }`}
-      >
-        {/* HUD Hero Section */}
+      <div className="flex-1 opacity-100 transition-all duration-500">
+        {/* Full-Screen Bento Command Dashboard */}
         <HeroSection 
           categories={categories} 
           activeCategory={activeCategory} 
           onFilterChange={setActiveCategory} 
         />
 
-        <div className="pb-32 px-6 relative h-full">
+        {/* Project List */}
+        <div className="pb-32 px-6 relative h-full bg-black">
           <div className="max-w-7xl mx-auto relative z-10">
-            
-            <div className="mt-16 flex flex-col gap-24">
+            <div className="flex flex-col gap-24">
               {sections.map(section => {
                 if (activeCategory !== "All" && activeCategory !== section) return null;
                 
                 const categoryProjects = allProjects.filter(p => p.category === section);
                 
                 return (
-                  <section key={section} className="relative">
+                  <section key={section} className="relative pt-24 border-t border-white/5">
                     {/* Section Header */}
                     <div className="flex items-center gap-6 mb-12">
                       <div className="w-3 h-3 bg-[#A3FF12] rounded-full animate-pulse shadow-[0_0_10px_rgba(163,255,18,0.5)]" />
